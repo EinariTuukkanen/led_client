@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import socket
 
 from utils.colors import random_rgbs

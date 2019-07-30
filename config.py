@@ -14,6 +14,6 @@ STRIPS = [
     {
         'name': 'room',
         'start': 0,
-        'end': 0
+        'end': 100
     },
 ]
