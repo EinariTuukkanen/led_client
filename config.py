@@ -1,4 +1,4 @@
-from utils.strips import NervesServer
+from utils.strips import NervesServer, VirtualServer  # noqa
 
 # IP for the socket server
 SERVER_IP = '192.168.1.136'
@@ -7,7 +7,7 @@ SERVER_IP = '192.168.1.136'
 SERVER_PORT = 2052
 
 # Select the correct server type
-SERVER_TYPE = NervesServer
+SERVER_TYPE = VirtualServer
 
 # It's possible to simulate multiple short strips within single longer one
 STRIPS = [
