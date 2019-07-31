@@ -17,7 +17,7 @@ final_size = room.length
 
 
 def extend_colors(colors):
-    m = final_size / count_size
+    m = final_size // count_size
     out = []
     for c in colors:
         out += [[c]] * m
