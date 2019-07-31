@@ -106,7 +106,7 @@ def main(parser, room):
                     g = math.ceil(g * br)
                     b = math.ceil(b * br)
 
-                    colors.append([r, g, b])
+                    colors.append([r, g, b, 0])
                 room.set_colors(colors)
 
         with sd.InputStream(

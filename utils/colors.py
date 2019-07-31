@@ -1,12 +1,20 @@
 from random import randint
 
 
+def random_rgbw():
+    return [randint(0, 255) for _ in range(4)]
+
+
 def random_rgb():
     return [randint(0, 255) for _ in range(3)]
 
 
 def random_rgbs(n):
     return [random_rgb() for _ in range(n)]
+
+
+def random_rgbws(n):
+    return [random_rgbw() for _ in range(n)]
 
 
 def rgb_to_hex(r, g, b):
