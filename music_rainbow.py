@@ -12,6 +12,16 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 connect_all(sock)
 
 room = strips['room']
+count_size = 50
+final_size = room.length
+
+
+def extend_colors(colors):
+    m = final_size / count_size
+    out = []
+    for c in colors:
+        out += [[c]] * m
+    return out
 
 
 def rainbow(pos):
@@ -52,12 +62,12 @@ def main(parser, room):
         samplerate = sd.query_devices(args.device, 'input')[
             'default_samplerate']
 
-        delta_f = (high - low) / (room.length - 1)
+        delta_f = (high - low) / (count_size - 1)
         fftsize = math.ceil(samplerate / delta_f)
         # low_bin = math.floor(low / delta_f)
 
         # For smoothing, we keep our previous values
-        previous_values = [0] * room.length
+        previous_values = [0] * count_size
         smoothing = args.smoothing ** (1 / 8)
 
         def audio_callback(indata, frames, time, status):
@@ -67,7 +77,7 @@ def main(parser, room):
                 magnitude *= args.gain / fftsize
 
                 # Take only the frequencies we're interested in
-                grouped = [[] for i in range(room.length)]
+                grouped = [[] for i in range(count_size)]
                 for i, x in enumerate(
                         magnitude[int(low // delta_f):int(high // delta_f)]):
                     grouped[int(i)].append(x)
@@ -79,7 +89,7 @@ def main(parser, room):
                 # humans. I suck at DSP, so take with a grain of salt.
                 for i, x in enumerate(grouped):
                     if len(x) > 0 and np.max(x) > 0:
-                        grouped[i] = ((i + 1) / room.length) * \
+                        grouped[i] = ((i + 1) / count_size) * \
                             args.gain * abs(np.max(x)) ** 2
                     else:
                         grouped[i] = 0
@@ -98,7 +108,7 @@ def main(parser, room):
                     previous_values[i] = value
 
                     # Calculate pixel color on an 256 segment rainbow
-                    pos = (i * 256 // room.length)
+                    pos = (i * 256 // count_size)
                     r, g, b = rainbow(pos & 255)
 
                     # Apply brightness (magnitude from FFT)
@@ -107,7 +117,7 @@ def main(parser, room):
                     b = math.ceil(b * br)
 
                     colors.append([r, g, b, 0])
-                room.set_colors(colors)
+                room.set_colors(extend_colors(colors))
 
         with sd.InputStream(
                 device=args.device, channels=1,
