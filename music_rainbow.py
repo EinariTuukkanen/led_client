@@ -20,7 +20,7 @@ def extend_colors(colors):
     m = final_size // count_size
     out = []
     for c in colors:
-        out += [[c]] * m
+        out += [c] * m
     return out
 
 
