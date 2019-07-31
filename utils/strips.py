@@ -24,7 +24,7 @@ class BaseStrip:
 class NervesStrip(BaseStrip):
     def set_colors(self, colors, offset=0):
         packet = pb.Packet()
-        packet.offset = offset
+        packet.offset = self.start
         for rgb in colors:
             for color in rgb:
                 packet.colors += bytes([color])
